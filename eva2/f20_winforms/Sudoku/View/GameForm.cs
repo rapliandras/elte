@@ -116,44 +116,117 @@ namespace ELTE.Forms.Sudoku.View
         /// </summary>
         private void ButtonGrid_MouseClick(Object sender, MouseEventArgs e)
         {
+            Color PlayerColor = _model.GameStepCount % 2 == 0 ? Color.FromArgb(255, 0, 0) : Color.FromArgb(0, 255, 255);
+
             // a TabIndex-ből megkapjuk a sort és oszlopot
-            Int32 x = ((sender as Button).TabIndex - 100) / _model.Table.Size;
-            Int32 y = ((sender as Button).TabIndex - 100) % _model.Table.Size;
+            Int32 currentLine = ((sender as Button).TabIndex - 100) / _model.Table.Size;
+            Int32 currentColumn = ((sender as Button).TabIndex - 100) % _model.Table.Size;
+
+            Console.WriteLine(currentLine);
+            Console.WriteLine(currentColumn);
+            Console.WriteLine("Currently selected:");
+            Console.WriteLine(_model.CurrentlySelectedTileX);
+            Console.WriteLine(_model.CurrentlySelectedTileY);
+            Console.WriteLine((sender as Button).TabIndex);
 
             //_model.Step(x, y); // lépés a játékban
 
-            if(_model.IsAnyFieldSelected())
+            if (_model.IsAnyFieldSelected())
             {
-                _buttonGrid[_model.CurrentlySelectedTileX, _model.CurrentlySelectedTileY].BackgroundImage = (Image)Properties.Resources.tile;
-                DrawLine();
+                _buttonGrid[
+                    _model.CurrentlySelectedTileX,
+                    _model.CurrentlySelectedTileY
+                    ].BackgroundImage = (Image)Properties.Resources.tile;
+
+
+                if(currentLine == _model.CurrentlySelectedTileX)
+                {
+                    if(currentColumn > _model.CurrentlySelectedTileY)
+                    {
+                        DrawLine(PlayerColor, Direction.Right);
+                        _model.GameStepCount++;
+                    }
+
+                    if(currentColumn < _model.CurrentlySelectedTileY)
+                    {
+                        DrawLine(PlayerColor, Direction.Left);
+                        _model.GameStepCount++;
+                    }
+                }
+
+
+                if (currentColumn == _model.CurrentlySelectedTileY)
+                {
+                    if (currentLine > _model.CurrentlySelectedTileX)
+                    {
+                        DrawLine(PlayerColor, Direction.Down);
+                        _model.GameStepCount++;
+                    }
+
+                    if (currentLine < _model.CurrentlySelectedTileX)
+                    {
+                        DrawLine(PlayerColor, Direction.Up);
+                        _model.GameStepCount++;
+                    }
+
+                }
+
+               _model.LinesOnGrid.Add(new Line(new TableGridPoint(1, 2), new TableGridPoint(3, 4)));
 
                 _model.ClearSelectedTiles();
 
             }
             else
             {
-                _model.Select(x, y);
-                _buttonGrid[x, y].BackgroundImage = (Image)Properties.Resources.orange_tile;
+                _model.Select(currentLine, currentColumn);
+                _buttonGrid[currentLine, currentColumn].BackgroundImage = (Image)Properties.Resources.orange_tile;
 
             }
 
             // mező frissítése
-            if (_model.Table.IsEmpty(x, y))
-                _buttonGrid[x, y].Text = String.Empty;
-            else
-                _buttonGrid[x, y].Text = _model.Table[x, y].ToString();
+            //if (_model.Table.IsEmpty(x, y))
+            //    _buttonGrid[x, y].Text = String.Empty;
+            //else
+            //    _buttonGrid[x, y].Text = _model.Table[x, y].ToString();
         }
 
-        private void DrawLine()
+        private void DrawLine(Color C, Direction D)
         {
-            Panel Line = new Panel();
-            Line.BackColor = Color.FromArgb(255, 0, 0);
-            Line.Width = 10;
-            Line.Height = 10;
-            Line.Location = new Point((_model.CurrentlySelectedTileY+1) * 50 - 25, (_model.CurrentlySelectedTileX+1) * 50);
-            
-            Line.Visible = true;
-            Line.AutoSize = true;
+            Panel Line = new Panel
+            {
+                BackColor = C,
+                Visible = true,
+                AutoSize = true
+            };
+
+            if (Direction.Right == D)
+            {
+                Line.Width = 50;
+                Line.Height = 10;
+                Line.Location = new Point((_model.CurrentlySelectedTileY + 1) * 50 - 20, (_model.CurrentlySelectedTileX + 1) * 50 - 5);
+            }
+
+            if (Direction.Left == D)
+            {
+                Line.Width = 50;
+                Line.Height = 10;
+                Line.Location = new Point((_model.CurrentlySelectedTileY + 1) * 50 - 70, (_model.CurrentlySelectedTileX + 1) * 50 - 5);
+            }
+
+            if (Direction.Down == D)
+            {
+                Line.Width = 10;
+                Line.Height = 50;
+                Line.Location = new Point((_model.CurrentlySelectedTileY + 1) * 50 - 25, (_model.CurrentlySelectedTileX + 1) * 50);
+            }
+
+            if (Direction.Up == D)
+            {
+                Line.Width = 10;
+                Line.Height = 50;
+                Line.Location = new Point((_model.CurrentlySelectedTileY + 1) * 50 - 25, (_model.CurrentlySelectedTileX + 1) * 50 - 50);
+            }
+
             Controls.Add(Line);
             Controls.SetChildIndex(Line, 4);
 

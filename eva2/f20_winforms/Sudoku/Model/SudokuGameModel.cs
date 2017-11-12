@@ -1,5 +1,6 @@
 ﻿using ELTE.Forms.Sudoku.Persistence;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ELTE.Forms.Sudoku.Model
@@ -9,6 +10,7 @@ namespace ELTE.Forms.Sudoku.Model
     /// </summary>
     public enum GameDifficulty { Easy, Medium, Hard }
 
+    public enum Direction { Up, Right, Down, Left }
 
     /// <summary>
     /// Sudoku játék típusa.
@@ -18,6 +20,8 @@ namespace ELTE.Forms.Sudoku.Model
 
         public int CurrentlySelectedTileX { get; set; } = -1;
         public int CurrentlySelectedTileY { get; set; } = -1;
+
+        public List<Line> LinesOnGrid = new List<Line>();
 
         #region Difficulty constants
 
@@ -45,7 +49,7 @@ namespace ELTE.Forms.Sudoku.Model
         /// <summary>
         /// Lépések számának lekérdezése.
         /// </summary>
-        public Int32 GameStepCount { get { return _gameStepCount; } }
+        public Int32 GameStepCount { get; set; }
 
         /// <summary>
         /// Hátramaradt játékidő lekérdezése.
@@ -66,6 +70,7 @@ namespace ELTE.Forms.Sudoku.Model
         /// Játéknehézség lekérdezése, vagy beállítása.
         /// </summary>
         public GameDifficulty GameDifficulty { get { return _gameDifficulty; } set { _gameDifficulty = value; } }
+
 
         #endregion
 
