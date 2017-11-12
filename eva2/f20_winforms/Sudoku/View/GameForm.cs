@@ -120,14 +120,43 @@ namespace ELTE.Forms.Sudoku.View
             Int32 x = ((sender as Button).TabIndex - 100) / _model.Table.Size;
             Int32 y = ((sender as Button).TabIndex - 100) % _model.Table.Size;
 
-            _model.Step(x, y); // lépés a játékban
-            
-            _buttonGrid[x, y].BackColor = Color.FromArgb(255, 0, 0);
+            //_model.Step(x, y); // lépés a játékban
+
+            if(_model.IsAnyFieldSelected())
+            {
+                _buttonGrid[_model.CurrentlySelectedTileX, _model.CurrentlySelectedTileY].BackgroundImage = (Image)Properties.Resources.tile;
+                DrawLine();
+
+                _model.ClearSelectedTiles();
+
+            }
+            else
+            {
+                _model.Select(x, y);
+                _buttonGrid[x, y].BackgroundImage = (Image)Properties.Resources.orange_tile;
+
+            }
+
             // mező frissítése
             if (_model.Table.IsEmpty(x, y))
                 _buttonGrid[x, y].Text = String.Empty;
             else
                 _buttonGrid[x, y].Text = _model.Table[x, y].ToString();
+        }
+
+        private void DrawLine()
+        {
+            Panel Line = new Panel();
+            Line.BackColor = Color.FromArgb(255, 0, 0);
+            Line.Width = 10;
+            Line.Height = 10;
+            Line.Location = new Point((_model.CurrentlySelectedTileY+1) * 50 - 25, (_model.CurrentlySelectedTileX+1) * 50);
+            
+            Line.Visible = true;
+            Line.AutoSize = true;
+            Controls.Add(Line);
+            Controls.SetChildIndex(Line, 4);
+
         }
 
         #endregion
@@ -268,6 +297,8 @@ namespace ELTE.Forms.Sudoku.View
                 {
                     _buttonGrid[i, j] = new Button();
                     _buttonGrid[i, j].Location = new Point(5 + 50 * j, 25 + 50 * i); // elhelyezkedés
+                    _buttonGrid[i, j].BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject("tile"); //
+                    _buttonGrid[i, j].BackColor = Color.Transparent;
                     _buttonGrid[i, j].Size = new Size(50, 50); // méret
                     _buttonGrid[i, j].Font = new Font(FontFamily.GenericSansSerif, 25, FontStyle.Bold); // betűtípus
                     _buttonGrid[i, j].Enabled = false; // kikapcsolt állapot

@@ -9,11 +9,16 @@ namespace ELTE.Forms.Sudoku.Model
     /// </summary>
     public enum GameDifficulty { Easy, Medium, Hard }
 
+
     /// <summary>
     /// Sudoku játék típusa.
     /// </summary>
     public class SudokuGameModel
     {
+
+        public int CurrentlySelectedTileX { get; set; } = -1;
+        public int CurrentlySelectedTileY { get; set; } = -1;
+
         #region Difficulty constants
 
         private const Int32 GameTimeEasy = 3600;
@@ -135,6 +140,25 @@ namespace ELTE.Forms.Sudoku.Model
                 OnGameOver(false);
         }
 
+        internal void Select(int x, int y)
+        {
+            CurrentlySelectedTileX = x;
+            CurrentlySelectedTileY = y;
+            
+        }
+
+        internal void ClearSelectedTiles()
+        {
+            CurrentlySelectedTileX = -1;
+            CurrentlySelectedTileY = -1;
+        }
+
+        internal bool IsAnyFieldSelected()
+        {
+            return !(CurrentlySelectedTileX == -1 && CurrentlySelectedTileY == -1);
+        }
+
+   
 
         /// <summary>
         /// Táblabeli lépés végrehajtása.

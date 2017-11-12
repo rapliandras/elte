@@ -7,3 +7,14 @@ C:\Users\AndrasRapli\Downloads\elte_eva2_feladatok_1_minta\Sudoku\obj\Debug\Sudo
 C:\Users\AndrasRapli\Downloads\elte_eva2_feladatok_1_minta\Sudoku\obj\Debug\Sudoku.csproj.CoreCompileInputs.cache
 C:\Users\AndrasRapli\Downloads\elte_eva2_feladatok_1_minta\Sudoku\obj\Debug\Sudoku.exe
 C:\Users\AndrasRapli\Downloads\elte_eva2_feladatok_1_minta\Sudoku\obj\Debug\Sudoku.pdb
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms\Sudoku\bin\Debug\View\GameForm.resx
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms\Sudoku\bin\Debug\Sudoku.exe
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms\Sudoku\bin\Debug\Sudoku.pdb
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms\Sudoku\obj\Debug\Sudoku.csprojResolveAssemblyReference.cache
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms\Sudoku\obj\Debug\ELTE.Forms.Sudoku.View.GameForm.resources
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms\Sudoku\obj\Debug\ELTE.Forms.Sudoku.Properties.Resources.resources
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms\Sudoku\obj\Debug\Sudoku.csproj.GenerateResource.Cache
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms\Sudoku\obj\Debug\Sudoku.csproj.CoreCompileInputs.cache
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms\Sudoku\obj\Debug\Sudoku.exe
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms\Sudoku\obj\Debug\Sudoku.pdb
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms\Sudoku\bin\Debug\Resources\tile.png

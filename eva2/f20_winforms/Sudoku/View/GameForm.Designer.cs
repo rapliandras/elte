@@ -53,12 +53,14 @@
             // 
             // _menuStrip
             // 
+            this._menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this._menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._menuFile,
             this._menuSettings});
             this._menuStrip.Location = new System.Drawing.Point(0, 0);
             this._menuStrip.Name = "_menuStrip";
-            this._menuStrip.Size = new System.Drawing.Size(462, 24);
+            this._menuStrip.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
+            this._menuStrip.Size = new System.Drawing.Size(616, 28);
             this._menuStrip.TabIndex = 0;
             this._menuStrip.Text = "menuStrip1";
             // 
@@ -72,44 +74,44 @@
             this.toolStripMenuItem2,
             this._menuFileExit});
             this._menuFile.Name = "_menuFile";
-            this._menuFile.Size = new System.Drawing.Size(37, 20);
+            this._menuFile.Size = new System.Drawing.Size(44, 24);
             this._menuFile.Text = "File";
             // 
             // _menuFileNewGame
             // 
             this._menuFileNewGame.Name = "_menuFileNewGame";
-            this._menuFileNewGame.Size = new System.Drawing.Size(160, 22);
+            this._menuFileNewGame.Size = new System.Drawing.Size(192, 26);
             this._menuFileNewGame.Text = "Új játék";
             this._menuFileNewGame.Click += new System.EventHandler(this.MenuFileNewGame_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(157, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(189, 6);
             // 
             // _menuFileLoadGame
             // 
             this._menuFileLoadGame.Name = "_menuFileLoadGame";
-            this._menuFileLoadGame.Size = new System.Drawing.Size(160, 22);
+            this._menuFileLoadGame.Size = new System.Drawing.Size(192, 26);
             this._menuFileLoadGame.Text = "Játék betöltése...";
             this._menuFileLoadGame.Click += new System.EventHandler(this.MenuFileLoadGame_Click);
             // 
             // _menuFileSaveGame
             // 
             this._menuFileSaveGame.Name = "_menuFileSaveGame";
-            this._menuFileSaveGame.Size = new System.Drawing.Size(160, 22);
+            this._menuFileSaveGame.Size = new System.Drawing.Size(192, 26);
             this._menuFileSaveGame.Text = "Játék mentése...";
             this._menuFileSaveGame.Click += new System.EventHandler(this.MenuFileSaveGame_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(157, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(189, 6);
             // 
             // _menuFileExit
             // 
             this._menuFileExit.Name = "_menuFileExit";
-            this._menuFileExit.Size = new System.Drawing.Size(160, 22);
+            this._menuFileExit.Size = new System.Drawing.Size(192, 26);
             this._menuFileExit.Text = "Kilépés";
             this._menuFileExit.Click += new System.EventHandler(this.MenuFileExit_Click);
             // 
@@ -120,27 +122,27 @@
             this._menuGameMedium,
             this._menuGameHard});
             this._menuSettings.Name = "_menuSettings";
-            this._menuSettings.Size = new System.Drawing.Size(75, 20);
+            this._menuSettings.Size = new System.Drawing.Size(93, 24);
             this._menuSettings.Text = "Beállítások";
             // 
             // _menuGameEasy
             // 
             this._menuGameEasy.Name = "_menuGameEasy";
-            this._menuGameEasy.Size = new System.Drawing.Size(152, 22);
+            this._menuGameEasy.Size = new System.Drawing.Size(176, 26);
             this._menuGameEasy.Text = "Könnyű játék";
             this._menuGameEasy.Click += new System.EventHandler(this.MenuGameEasy_Click);
             // 
             // _menuGameMedium
             // 
             this._menuGameMedium.Name = "_menuGameMedium";
-            this._menuGameMedium.Size = new System.Drawing.Size(152, 22);
+            this._menuGameMedium.Size = new System.Drawing.Size(176, 26);
             this._menuGameMedium.Text = "Közepes játék";
             this._menuGameMedium.Click += new System.EventHandler(this.MenuGameMedium_Click);
             // 
             // _menuGameHard
             // 
             this._menuGameHard.Name = "_menuGameHard";
-            this._menuGameHard.Size = new System.Drawing.Size(152, 22);
+            this._menuGameHard.Size = new System.Drawing.Size(176, 26);
             this._menuGameHard.Text = "Nehéz játék";
             this._menuGameHard.Click += new System.EventHandler(this.MenuGameHard_Click);
             // 
@@ -156,21 +158,23 @@
             // 
             // _statusStrip
             // 
+            this._statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this._statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._toolLabel1,
             this._toolLabelGameSteps,
             this._toolLabel2,
             this._toolLabelGameTime});
-            this._statusStrip.Location = new System.Drawing.Point(0, 480);
+            this._statusStrip.Location = new System.Drawing.Point(0, 591);
             this._statusStrip.Name = "_statusStrip";
-            this._statusStrip.Size = new System.Drawing.Size(462, 24);
+            this._statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this._statusStrip.Size = new System.Drawing.Size(616, 29);
             this._statusStrip.TabIndex = 1;
             this._statusStrip.Text = "statusStrip1";
             // 
             // _toolLabel1
             // 
             this._toolLabel1.Name = "_toolLabel1";
-            this._toolLabel1.Size = new System.Drawing.Size(67, 19);
+            this._toolLabel1.Size = new System.Drawing.Size(84, 24);
             this._toolLabel1.Text = "Lépésszám:";
             // 
             // _toolLabelGameSteps
@@ -178,13 +182,13 @@
             this._toolLabelGameSteps.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this._toolLabelGameSteps.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
             this._toolLabelGameSteps.Name = "_toolLabelGameSteps";
-            this._toolLabelGameSteps.Size = new System.Drawing.Size(17, 19);
+            this._toolLabelGameSteps.Size = new System.Drawing.Size(21, 24);
             this._toolLabelGameSteps.Text = "0";
             // 
             // _toolLabel2
             // 
             this._toolLabel2.Name = "_toolLabel2";
-            this._toolLabel2.Size = new System.Drawing.Size(53, 19);
+            this._toolLabel2.Size = new System.Drawing.Size(67, 24);
             this._toolLabel2.Text = "Játékidő:";
             // 
             // _toolLabelGameTime
@@ -192,18 +196,19 @@
             this._toolLabelGameTime.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this._toolLabelGameTime.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
             this._toolLabelGameTime.Name = "_toolLabelGameTime";
-            this._toolLabelGameTime.Size = new System.Drawing.Size(47, 19);
+            this._toolLabelGameTime.Size = new System.Drawing.Size(59, 24);
             this._toolLabelGameTime.Text = "0:00:00";
             // 
             // GameForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(462, 504);
+            this.ClientSize = new System.Drawing.Size(616, 620);
             this.Controls.Add(this._statusStrip);
             this.Controls.Add(this._menuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this._menuStrip;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "GameForm";
             this.Text = "Sudoku játék";
