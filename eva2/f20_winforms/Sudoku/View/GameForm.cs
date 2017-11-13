@@ -3,6 +3,8 @@ using ELTE.Forms.Sudoku.Persistence;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace ELTE.Forms.Sudoku.View
 {
@@ -129,8 +131,40 @@ namespace ELTE.Forms.Sudoku.View
             Console.WriteLine(_model.CurrentlySelectedTileY);
             Console.WriteLine((sender as Button).TabIndex);
 
-            //_model.Step(x, y); // lépés a játékban
+            DrawLineOnTileClick(PlayerColor, currentLine, currentColumn);
 
+        }
+
+        private void DrawSquareOnTileClick(Color playerColor)
+        {
+
+            Edge MostRecentEdge = _model.EdgeList[_model.EdgeList.Count - 1];
+
+            int HorizontalEdgeCount = 0;
+            int VerticalEdgeCount = 0;
+
+            List<Edge> NeighbourEdges = new List<Edge>();
+
+            foreach (Edge E in _model.EdgeList)
+            {
+                
+                Edge CurrentEdge = E;
+
+                // eseményes él szomszédjai
+                NeighbourEdges = _model.NeighboursForEdge(CurrentEdge);
+
+                // amíg vannak szomszédjai
+                while (NeighbourEdges.Count() > 0)
+                {
+                    NeighbourEdges = _model.NeighboursForEdge(NeighbourEdges.Last());
+                    NeighbourEdges.RemoveAt(NeighbourEdges.Count - 1);
+                }
+             
+            }
+        }
+
+        private void DrawLineOnTileClick(Color PlayerColor, int currentLine, int currentColumn)
+        {
             if (_model.IsAnyFieldSelected())
             {
                 _buttonGrid[
@@ -139,15 +173,15 @@ namespace ELTE.Forms.Sudoku.View
                     ].BackgroundImage = (Image)Properties.Resources.tile;
 
 
-                if(currentLine == _model.CurrentlySelectedTileX)
+                if (currentLine == _model.CurrentlySelectedTileX)
                 {
-                    if(currentColumn > _model.CurrentlySelectedTileY)
+                    if (currentColumn > _model.CurrentlySelectedTileY)
                     {
                         DrawLine(PlayerColor, Direction.Right);
                         _model.GameStepCount++;
                     }
 
-                    if(currentColumn < _model.CurrentlySelectedTileY)
+                    if (currentColumn < _model.CurrentlySelectedTileY)
                     {
                         DrawLine(PlayerColor, Direction.Left);
                         _model.GameStepCount++;
@@ -171,9 +205,11 @@ namespace ELTE.Forms.Sudoku.View
 
                 }
 
-               _model.LinesOnGrid.Add(new Line(new TableGridPoint(1, 2), new TableGridPoint(3, 4)));
+                _model.EdgeList.Add(new Edge(new TableGridPoint(1, 2), new TableGridPoint(3, 4)));
 
                 _model.ClearSelectedTiles();
+                DrawSquareOnTileClick(PlayerColor);
+
 
             }
             else
@@ -182,12 +218,6 @@ namespace ELTE.Forms.Sudoku.View
                 _buttonGrid[currentLine, currentColumn].BackgroundImage = (Image)Properties.Resources.orange_tile;
 
             }
-
-            // mező frissítése
-            //if (_model.Table.IsEmpty(x, y))
-            //    _buttonGrid[x, y].Text = String.Empty;
-            //else
-            //    _buttonGrid[x, y].Text = _model.Table[x, y].ToString();
         }
 
         private void DrawLine(Color C, Direction D)

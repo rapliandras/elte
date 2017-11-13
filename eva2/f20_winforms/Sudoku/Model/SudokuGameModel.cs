@@ -21,7 +21,7 @@ namespace ELTE.Forms.Sudoku.Model
         public int CurrentlySelectedTileX { get; set; } = -1;
         public int CurrentlySelectedTileY { get; set; } = -1;
 
-        public List<Line> LinesOnGrid = new List<Line>();
+        public List<Edge> EdgeList = new List<Edge>();
 
         #region Difficulty constants
 
@@ -104,6 +104,12 @@ namespace ELTE.Forms.Sudoku.Model
         #endregion
 
         #region Public game methods
+
+        public System.Collections.Generic.List<Edge> NeighboursForEdge(Edge E)
+        {
+            return this.EdgeList.FindAll(delegate (Edge CurrentEdge) { return CurrentEdge.StartPoint == E.EndPoint || CurrentEdge.EndPoint == E.StartPoint; });
+
+        }
 
         /// <summary>
         /// Új játék kezdése.
