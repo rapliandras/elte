@@ -15,7 +15,7 @@ namespace ELTE.Forms.Sudoku.Model
     /// <summary>
     /// Sudoku játék típusa.
     /// </summary>
-    public class SudokuGameModel
+    public class GameModel
     {
 
         public int CurrentlySelectedTileX { get; set; } = -1;
@@ -37,7 +37,7 @@ namespace ELTE.Forms.Sudoku.Model
         #region Fields
 
         private ISudokuDataAccess _dataAccess; // adatelérés
-        private SudokuTable _table; // játéktábla
+        private GameTable _table; // játéktábla
         private GameDifficulty _gameDifficulty; // nehézség
         private Int32 _gameStepCount; // lépések száma
         private Int32 _gameTime; // játékidő
@@ -59,7 +59,7 @@ namespace ELTE.Forms.Sudoku.Model
         /// <summary>
         /// Játéktábla lekérdezése.
         /// </summary>
-        public SudokuTable Table { get { return _table; } }
+        public GameTable Table { get { return _table; } }
 
         /// <summary>
         /// Játék végének lekérdezése.
@@ -79,12 +79,12 @@ namespace ELTE.Forms.Sudoku.Model
         /// <summary>
         /// Játék előrehaladásának eseménye.
         /// </summary>
-        public event EventHandler<SudokuEventArgs> GameAdvanced;
+        public event EventHandler<GameEventArgs> GameAdvanced;
 
         /// <summary>
         /// Játék végének eseménye.
         /// </summary>
-        public event EventHandler<SudokuEventArgs> GameOver;
+        public event EventHandler<GameEventArgs> GameOver;
 
         #endregion
 
@@ -94,10 +94,10 @@ namespace ELTE.Forms.Sudoku.Model
         /// Sudoku játék példányosítása.
         /// </summary>
         /// <param name="dataAccess">Az adatelérés.</param>
-        public SudokuGameModel(ISudokuDataAccess dataAccess)
+        public GameModel(ISudokuDataAccess dataAccess)
         {
             _dataAccess = dataAccess;
-            _table = new SudokuTable();
+            _table = new GameTable();
             _gameDifficulty = GameDifficulty.Medium;
         }
 
@@ -107,7 +107,7 @@ namespace ELTE.Forms.Sudoku.Model
 
         public System.Collections.Generic.List<Edge> NeighboursForEdge(Edge E)
         {
-            return this.EdgeList.FindAll(delegate (Edge CurrentEdge) { return CurrentEdge.StartPoint == E.EndPoint || CurrentEdge.EndPoint == E.StartPoint; });
+            return this.EdgeList.FindAll(delegate (Edge CurrentEdge) { return CurrentEdge.Nodes.Overlaps(E.Nodes); });
 
         }
 
@@ -116,24 +116,10 @@ namespace ELTE.Forms.Sudoku.Model
         /// </summary>
         public void NewGame()
         {
-            _table = new SudokuTable();
+            _table = new GameTable();
             _gameStepCount = 0;
+            _gameTime = GameTimeMedium;
 
-            switch (_gameDifficulty) // nehézségfüggő beállítása az időnek, illetve a generált mezőknek
-            { 
-                case GameDifficulty.Easy:
-                    _gameTime = GameTimeEasy;
-                    GenerateFields(GeneratedFieldCountEasy);
-                    break;
-                case GameDifficulty.Medium:
-                    _gameTime = GameTimeMedium;
-                    GenerateFields(GeneratedFieldCountMedium);
-                    break;
-                case GameDifficulty.Hard:
-                    _gameTime = GameTimeHard;
-                    GenerateFields(GeneratedFieldCountHard);
-                    break;
-            }
         }
 
         /// <summary>
@@ -182,8 +168,7 @@ namespace ELTE.Forms.Sudoku.Model
                 return;
             if (_table.IsLocked(x, y)) // ha a mező zárolva van, nem léthatünk
                 return;
-
-            _table.StepValue(x, y);
+         
 
             _gameStepCount++; // lépésszám növelés
 
@@ -235,41 +220,12 @@ namespace ELTE.Forms.Sudoku.Model
 
         #endregion
 
-        #region Private game methods
 
-        /// <summary>
-        /// Mezők generálása.
-        /// </summary>
-        /// <param name="count">Mezők száma.</param>
-        private void GenerateFields(Int32 count)
+        public Player GetCurrentPlayer()
         {
-            Random random = new Random();
-
-            for (Int32 i = 0; i < count; i++)
-            {
-                Int32 x, y;
-
-                do
-                {
-                    x = random.Next(_table.Size);
-                    y = random.Next(_table.Size);
-                }
-                while (!_table.IsEmpty(x, y)); // üres mező véletlenszerű kezelése
-
-                do
-                {
-                    for (Int32 j = random.Next(10) + 1; j >= 0; j--) // véletlenszerű növelés
-                    {
-                        _table.StepValue(x, y);
-                    }
-                }
-                while (_table.IsEmpty(x, y));
-
-                _table.SetLock(x, y);
-            }
+            return GameStepCount % 2 == 0 ? Player.Blue : Player.Red;
         }
 
-        #endregion
 
         #region Private event methods
 
@@ -279,7 +235,7 @@ namespace ELTE.Forms.Sudoku.Model
         private void OnGameAdvanced()
         {
             if (GameAdvanced != null)
-                GameAdvanced(this, new SudokuEventArgs(false, _gameStepCount, _gameTime));
+                GameAdvanced(this, new GameEventArgs(false, _gameStepCount, _gameTime));
         }
 
         /// <summary>
@@ -289,7 +245,7 @@ namespace ELTE.Forms.Sudoku.Model
         private void OnGameOver(Boolean isWon)
         {
             if (GameOver != null)
-                GameOver(this, new SudokuEventArgs(isWon, _gameStepCount, _gameTime));
+                GameOver(this, new GameEventArgs(isWon, _gameStepCount, _gameTime));
         }
 
         #endregion

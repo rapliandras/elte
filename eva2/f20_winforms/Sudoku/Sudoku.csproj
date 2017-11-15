@@ -64,22 +64,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Line.cs" />
+    <Compile Include="Model\Edge.cs" />
+    <Compile Include="Model\Orientation.cs" />
+    <Compile Include="Model\Player.cs" />
     <Compile Include="Model\TableGridPoint.cs" />
     <Compile Include="Persistence\ISudokuDataAccess.cs" />
     <Compile Include="Persistence\SudokuFileDataAccess.cs" />
-    <Compile Include="Persistence\SudokuTable.cs" />
+    <Compile Include="Persistence\GameTable.cs" />
     <Compile Include="View\GameForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\GameForm.Designer.cs">
       <DependentUpon>GameForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\SudokuEventArgs.cs" />
+    <Compile Include="Model\GameEventArgs.cs" />
     <Compile Include="Persistence\SudokuDataException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\SudokuGameModel.cs" />
+    <Compile Include="Model\GameModel.cs" />
     <EmbeddedResource Include="View\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -132,6 +134,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\orange_tile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\red_tile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blue_tile.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

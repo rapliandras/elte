@@ -7,16 +7,16 @@ namespace ELTE.Forms.Sudoku.Test
     [TestClass]
     public class SudokuGameModelTest
     {
-        private SudokuGameModel _model; // a tesztelendő modell
+        private GameModel _model; // a tesztelendő modell
 
         [TestInitialize]
         public void Initialize()
         {
-            _model = new SudokuGameModel(null);
+            _model = new GameModel(null);
             // perzisztencia nélküli modellt hozunk létre
 
-            _model.GameAdvanced += new EventHandler<SudokuEventArgs>(Model_GameAdvanced);
-            _model.GameOver += new EventHandler<SudokuEventArgs>(Model_GameOver);
+            _model.GameAdvanced += new EventHandler<GameEventArgs>(Model_GameAdvanced);
+            _model.GameOver += new EventHandler<GameEventArgs>(Model_GameOver);
         }
 
 
@@ -132,7 +132,7 @@ namespace ELTE.Forms.Sudoku.Test
             Assert.AreEqual(0, _model.GameTime); // a játék végére elfogyott a játékidő
         }
 
-        private void Model_GameAdvanced(Object sender, SudokuEventArgs e)
+        private void Model_GameAdvanced(Object sender, GameEventArgs e)
         {
             Assert.IsTrue(_model.GameTime >= 0); // a játékidő nem lehet negatív
             Assert.AreEqual(_model.GameTime == 0, _model.IsGameOver); // a tesztben a játéknak csak akkor lehet vége, ha lejárt az idő
@@ -142,7 +142,7 @@ namespace ELTE.Forms.Sudoku.Test
             Assert.IsFalse(e.IsWon); // még nem nyerték meg a játékot
         }
 
-        private void Model_GameOver(Object sender, SudokuEventArgs e)
+        private void Model_GameOver(Object sender, GameEventArgs e)
         {
             Assert.IsTrue(_model.IsGameOver); // biztosan vége van a játéknak
             Assert.AreEqual(0, e.GameTime); // a tesztben csak akkor váltódhat ki, ha elfogy az idő

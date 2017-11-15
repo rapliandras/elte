@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ELTE.Forms.Sudoku.Model
 {
-    public enum Orientation { Horizontal, Vertical }
-
+    public enum Player
+    {
+        Blue,
+        Red
+    }
 }

@@ -5,7 +5,7 @@ namespace ELTE.Forms.Sudoku.Persistence
     /// <summary>
     /// Sudoku játéktábla típusa.
     /// </summary>
-    public class SudokuTable
+    public class GameTable
     {
         #region Fields
 
@@ -56,14 +56,14 @@ namespace ELTE.Forms.Sudoku.Persistence
         /// <summary>
         /// Sudoku játéktábla példányosítása.
         /// </summary>
-        public SudokuTable() : this(9, 3) { }
+        public GameTable() : this(9, 3) { }
 
         /// <summary>
         /// Sudoku játéktábla példányosítása.
         /// </summary>
         /// <param name="tableSize">Játéktábla mérete.</param>
         /// <param name="regionSize">Ház mérete.</param>
-        public SudokuTable(Int32 tableSize, Int32 regionSize)
+        public GameTable(Int32 tableSize, Int32 regionSize)
         {
             if (tableSize < 0)
                 throw new ArgumentOutOfRangeException("The table size is less than 0.", "tableSize");
@@ -131,51 +131,8 @@ namespace ELTE.Forms.Sudoku.Persistence
             return _fieldValues[x, y];
         }
 
-        /// <summary>
-        /// Mező értékének beállítása.
-        /// </summary>
-        /// <param name="x">Vízszintes koordináta.</param>
-        /// <param name="y">Függőleges koordináta.</param>
-        /// <param name="value">Érték.</param>
-        /// <param name="lockField">Zárolja-e a mezőt.</param>
-        public void SetValue(Int32 x, Int32 y, Int32 value, Boolean lockField) 
-        {
-            if (x < 0 || x >= _fieldValues.GetLength(0))
-                throw new ArgumentOutOfRangeException("x", "The X coordinate is out of range.");
-            if (y < 0 || y >= _fieldValues.GetLength(1))
-                throw new ArgumentOutOfRangeException("y", "The Y coordinate is out of range.");
-            if (value < 0 || value > _fieldValues.GetLength(0) + 1)
-                throw new ArgumentOutOfRangeException("value", "The value is out of range.");
-            if (_fieldLocks[x, y]) // ha már zárolva van, nem állíthatjuk be
-                return;
-            if (!CheckStep(x, y)) // ha a beállítás érvénytelen, akkor nem végezzük el
-                return;
 
-            _fieldValues[x, y] = value;
-            _fieldLocks[x, y] = lockField;
-        }
 
-        /// <summary>
-        /// Mező léptetése.
-        /// </summary>
-        /// <param name="x">Vízszintes koordináta.</param>
-        /// <param name="y">Függőleges koordináta.</param>
-        public void StepValue(Int32 x, Int32 y)
-        {
-            if (x < 0 || x >= _fieldValues.GetLength(0))
-                throw new ArgumentOutOfRangeException("x", "The X coordinate is out of range.");
-            if (y < 0 || y >= _fieldValues.GetLength(1))
-                throw new ArgumentOutOfRangeException("y", "The Y coordinate is out of range.");
-
-            if (_fieldLocks[x, y]) // ha már zárolva van, nem állíthatjuk be
-                return;
-
-            do
-            {
-                _fieldValues[x, y] = (_fieldValues[x, y] + 1) % (_fieldValues.GetLength(0) + 1); // ciklikus generálás
-            }
-            while (!CheckStep(x, y)); // amíg nem jó az érték
-        }
 
         /// <summary>
         /// Mező zárolása.

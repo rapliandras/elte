@@ -63,9 +63,29 @@ namespace ELTE.Forms.Sudoku.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap blue_tile {
+            get {
+                object obj = ResourceManager.GetObject("blue_tile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap orange_tile {
             get {
                 object obj = ResourceManager.GetObject("orange_tile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap red_tile {
+            get {
+                object obj = ResourceManager.GetObject("red_tile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

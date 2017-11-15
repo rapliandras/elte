@@ -14,7 +14,7 @@ namespace ELTE.Forms.Sudoku.Persistence
         /// </summary>
         /// <param name="path">Elérési útvonal.</param>
         /// <returns>A fájlból beolvasott játéktábla.</returns>
-        public async Task<SudokuTable> LoadAsync(String path)
+        public async Task<GameTable> LoadAsync(String path)
         {
             try
             {
@@ -24,16 +24,12 @@ namespace ELTE.Forms.Sudoku.Persistence
                     String[] numbers = line.Split(' '); // beolvasunk egy sort, és a szóköz mentén széttöredezzük
                     Int32 tableSize = Int32.Parse(numbers[0]); // beolvassuk a tábla méretét
                     Int32 regionSize = Int32.Parse(numbers[1]); // beolvassuk a házak méretét
-                    SudokuTable table = new SudokuTable(tableSize, regionSize); // létrehozzuk a táblát
+                    GameTable table = new GameTable(tableSize, regionSize); // létrehozzuk a táblát
 
                     for (Int32 i = 0; i < tableSize; i++)
                     {
                         line = await reader.ReadLineAsync();
                         numbers = line.Split(' ');
-                        for (Int32 j = 0; j < tableSize; j++)
-                        {
-                            table.SetValue(i, j, Int32.Parse(numbers[j]), numbers[j] != "0");
-                        }
                     }
 
                     return table;
@@ -50,7 +46,7 @@ namespace ELTE.Forms.Sudoku.Persistence
         /// </summary>
         /// <param name="path">Elérési útvonal.</param>
         /// <param name="table">A fájlba kiírandó játéktábla.</param>
-        public async Task SaveAsync(String path, SudokuTable table)
+        public async Task SaveAsync(String path, GameTable table)
         {
             try
             {

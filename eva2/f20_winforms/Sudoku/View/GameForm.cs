@@ -16,7 +16,7 @@ namespace ELTE.Forms.Sudoku.View
         #region Fields
 
         private ISudokuDataAccess _dataAccess; // adatelérés
-        private SudokuGameModel _model; // játékmodell
+        private GameModel _model; // játékmodell
         private Button[,] _buttonGrid; // gombrács
         private Timer _timer; // időzítő
 
@@ -45,18 +45,19 @@ namespace ELTE.Forms.Sudoku.View
             _dataAccess = new SudokuFileDataAccess();
 
             // modell létrehozása és az eseménykezelők társítása
-            _model = new SudokuGameModel(_dataAccess);
-            _model.GameAdvanced += new EventHandler<SudokuEventArgs>(Game_GameAdvanced);
-            _model.GameOver += new EventHandler<SudokuEventArgs>(Game_GameOver);
+            _model = new GameModel(_dataAccess);
+            _model.GameAdvanced += new EventHandler<GameEventArgs>(Game_GameAdvanced);
+            _model.GameOver += new EventHandler<GameEventArgs>(Game_GameOver);
 
             // időzítő létrehozása
-            _timer = new Timer();
-            _timer.Interval = 1000;
+            _timer = new Timer
+            {
+                Interval = 1000
+            };
             _timer.Tick += new EventHandler(Timer_Tick);
 
-            // játéktábla és menük inicializálása
+            // játéktábla  inicializálása
             GenerateTable();
-            SetupMenus();
 
             // új játék indítása
             _model.NewGame();
@@ -72,7 +73,7 @@ namespace ELTE.Forms.Sudoku.View
         /// <summary>
         /// Játék előrehaladásának eseménykezelője.
         /// </summary>
-        private void Game_GameAdvanced(Object sender, SudokuEventArgs e)
+        private void Game_GameAdvanced(Object sender, GameEventArgs e)
         {
             _toolLabelGameTime.Text = TimeSpan.FromSeconds(e.GameTime).ToString("g");
             _toolLabelGameSteps.Text = e.GameStepCount.ToString();
@@ -82,7 +83,7 @@ namespace ELTE.Forms.Sudoku.View
         /// <summary>
         /// Játék végének eseménykezelője.
         /// </summary>
-        private void Game_GameOver(Object sender, SudokuEventArgs e)
+        private void Game_GameOver(Object sender, GameEventArgs e)
         {
             _timer.Stop();
 
@@ -118,7 +119,7 @@ namespace ELTE.Forms.Sudoku.View
         /// </summary>
         private void ButtonGrid_MouseClick(Object sender, MouseEventArgs e)
         {
-            Color PlayerColor = _model.GameStepCount % 2 == 0 ? Color.FromArgb(255, 0, 0) : Color.FromArgb(0, 255, 255);
+            Color PlayerColor = _model.GetCurrentPlayer() == Player.Red ? Color.FromArgb(255, 0, 0) : Color.FromArgb(0, 0, 255);
 
             // a TabIndex-ből megkapjuk a sort és oszlopot
             Int32 currentLine = ((sender as Button).TabIndex - 100) / _model.Table.Size;
@@ -131,36 +132,31 @@ namespace ELTE.Forms.Sudoku.View
             Console.WriteLine(_model.CurrentlySelectedTileY);
             Console.WriteLine((sender as Button).TabIndex);
 
+            foreach(Edge E in _model.EdgeList)
+            {
+                bool FoundStartingNode = false;
+                Edge CurrentEdge = E;
+                while(FoundStartingNode == false){
+                    List<Edge> CurrentNeighbourList = _model.NeighboursForEdge(CurrentEdge);
+                    while (CurrentNeighbourList.Count() > 0)
+                    {
+
+                    }
+                }
+                foreach(Node N in E.Nodes)
+                {
+                    ColorSquareTiles(_model.GetCurrentPlayer(), _buttonGrid[N.X, N.Y]);
+
+                }
+            }
+            
             DrawLineOnTileClick(PlayerColor, currentLine, currentColumn);
 
         }
 
-        private void DrawSquareOnTileClick(Color playerColor)
+        private void ColorSquareTiles(Player CurrentPlayer, Button B)
         {
-
-            Edge MostRecentEdge = _model.EdgeList[_model.EdgeList.Count - 1];
-
-            int HorizontalEdgeCount = 0;
-            int VerticalEdgeCount = 0;
-
-            List<Edge> NeighbourEdges = new List<Edge>();
-
-            foreach (Edge E in _model.EdgeList)
-            {
-                
-                Edge CurrentEdge = E;
-
-                // eseményes él szomszédjai
-                NeighbourEdges = _model.NeighboursForEdge(CurrentEdge);
-
-                // amíg vannak szomszédjai
-                while (NeighbourEdges.Count() > 0)
-                {
-                    NeighbourEdges = _model.NeighboursForEdge(NeighbourEdges.Last());
-                    NeighbourEdges.RemoveAt(NeighbourEdges.Count - 1);
-                }
-             
-            }
+            B.BackgroundImage = CurrentPlayer == Player.Blue ? (Image)Properties.Resources.blue_tile : (Image)Properties.Resources.red_tile;
         }
 
         private void DrawLineOnTileClick(Color PlayerColor, int currentLine, int currentColumn)
@@ -205,10 +201,10 @@ namespace ELTE.Forms.Sudoku.View
 
                 }
 
-                _model.EdgeList.Add(new Edge(new TableGridPoint(1, 2), new TableGridPoint(3, 4)));
+                _model.EdgeList.Add(new Edge(new Node(currentLine, currentColumn), new Node(_model.CurrentlySelectedTileX, _model.CurrentlySelectedTileY)));
 
                 _model.ClearSelectedTiles();
-                DrawSquareOnTileClick(PlayerColor);
+                //DrawSquareOnTileClick(PlayerColor);
 
 
             }
@@ -418,41 +414,20 @@ namespace ELTE.Forms.Sudoku.View
         /// <summary>
         /// Tábla beállítása.
         /// </summary>
-        private void SetupTable() 
+        private void SetupTable()
         {
             for (Int32 i = 0; i < _buttonGrid.GetLength(0); i++)
             {
                 for (Int32 j = 0; j < _buttonGrid.GetLength(1); j++)
                 {
-                    if (_model.Table.IsEmpty(i, j)) // ha nincs kitöltve a mező
-                    {
-                        _buttonGrid[i, j].Text = String.Empty;
-                        _buttonGrid[i, j].Enabled = true;
-                        _buttonGrid[i, j].BackColor = Color.White;
-                    }
-                    else // ha ki van töltve
-                    {
-                        _buttonGrid[i, j].Text = _model.Table[i, j].ToString();
-                        _buttonGrid[i, j].Enabled = false; // gomb bekapcsolása
-                        _buttonGrid[i, j].BackColor = Color.Yellow; 
-                            // háttérszín sárga, ha zárolni kell a mezőt, különben fehér
-                    }
+                    _buttonGrid[i, j].Text = String.Empty;
+                    _buttonGrid[i, j].Enabled = true;
+
                 }
             }
-
-            _toolLabelGameSteps.Text = _model.GameStepCount.ToString();
-            _toolLabelGameTime.Text = TimeSpan.FromSeconds(_model.GameTime).ToString("g");
+        
         }
 
-        /// <summary>
-        /// Menük beállítása.
-        /// </summary>
-        private void SetupMenus()
-        {
-            _menuGameEasy.Checked = (_model.GameDifficulty == GameDifficulty.Easy);
-            _menuGameMedium.Checked = (_model.GameDifficulty == GameDifficulty.Medium);
-            _menuGameHard.Checked = (_model.GameDifficulty == GameDifficulty.Hard);
-        }
 
         #endregion
     }

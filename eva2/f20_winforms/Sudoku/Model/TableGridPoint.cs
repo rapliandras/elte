@@ -1,17 +1,17 @@
 ﻿namespace ELTE.Forms.Sudoku.Model
 {
-    public class TableGridPoint
+    public class Node
     {
         public int X { get; set; }
         public int Y { get; set; }
 
-        public TableGridPoint(int x, int y)
+        public Node(int x, int y)
         {
             X = x;
             Y = y;
         }
 
-        public Direction GetDirectionFromAdjacentPoint(TableGridPoint OtherPoint)
+        public Direction GetDirectionFromAdjacentPoint(Node OtherPoint)
         {
             if(this.X + 1 == OtherPoint.X)
             {
@@ -33,7 +33,8 @@
                 return Direction.Up;
             }
 
-            throw new System.Exception("The points are not adjacent.");
+            return Direction.Down;
+            //throw new System.Exception("The points are not adjacent.");
         }
     }
 }

@@ -1,21 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ELTE.Forms.Sudoku.Model
 {
+    // Undirected edge
     public class Edge
     {
-        public TableGridPoint StartPoint { get; set; }
-        public TableGridPoint EndPoint { get; set; }
+        public HashSet<Node> Nodes { get; set; }
+        public Player AssignedPlayer;
+
         public Orientation EdgeOrientation { get; set; }
 
-        public Edge(TableGridPoint startPoint, TableGridPoint endPoint)
+        public Edge(Node startPoint, Node endPoint)
         {
-            this.StartPoint = startPoint ?? throw new ArgumentNullException(nameof(startPoint));
-            this.EndPoint = endPoint ?? throw new ArgumentNullException(nameof(endPoint));
+            this.Nodes = new HashSet<Node>();
+            this.Nodes.Add(startPoint);
+            this.Nodes.Add(endPoint);
 
             Direction[] Horizontal = { Direction.Left, Direction.Right };
-            this.EdgeOrientation = Horizontal.Contains(this.StartPoint.GetDirectionFromAdjacentPoint(this.EndPoint)) ? Orientation.Horizontal : Orientation.Vertical; 
+
+            this.EdgeOrientation = Horizontal.Contains(startPoint.GetDirectionFromAdjacentPoint(endPoint)) ? Orientation.Horizontal : Orientation.Vertical; 
         }
         
     }

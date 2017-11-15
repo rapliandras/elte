@@ -5,7 +5,7 @@ namespace ELTE.Forms.Sudoku.Model
     /// <summary>
     /// Sudoku eseményargumentum típusa.
     /// </summary>
-    public class SudokuEventArgs : EventArgs
+    public class GameEventArgs : EventArgs
     {
         private Int32 _gameTime;
         private Int32 _steps;
@@ -32,7 +32,7 @@ namespace ELTE.Forms.Sudoku.Model
         /// <param name="isWon">Győzelem lekérdezése.</param>
         /// <param name="gameStepCount">Lépésszám.</param>
         /// <param name="gameTime">Játékidő.</param>
-        public SudokuEventArgs(Boolean isWon, Int32 gameStepCount, Int32 gameTime) 
+        public GameEventArgs(Boolean isWon, Int32 gameStepCount, Int32 gameTime) 
         { 
             _isWon = isWon;
             _steps = gameStepCount;
