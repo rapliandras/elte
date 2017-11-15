@@ -11,6 +11,11 @@
             Y = y;
         }
 
+        public bool NeighboursWith(Node N)
+        {
+            return (N.X == this.X ^ N.Y == this.Y);
+        }
+
         public Direction GetDirectionFromAdjacentPoint(Node OtherPoint)
         {
             if(this.X + 1 == OtherPoint.X)

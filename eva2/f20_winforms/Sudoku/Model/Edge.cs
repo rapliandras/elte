@@ -22,6 +22,22 @@ namespace ELTE.Forms.Sudoku.Model
 
             this.EdgeOrientation = Horizontal.Contains(startPoint.GetDirectionFromAdjacentPoint(endPoint)) ? Orientation.Horizontal : Orientation.Vertical; 
         }
+
+        public bool ConnectsTo(Edge AnotherEdge)
+        {
+            foreach (Node N1 in this.Nodes)
+            {
+                foreach(Node N2 in AnotherEdge.Nodes)
+                {
+                    if(N1.X == N2.X ^ N1.Y == N2.Y)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
         
     }
 }

@@ -125,32 +125,77 @@ namespace ELTE.Forms.Sudoku.View
             Int32 currentLine = ((sender as Button).TabIndex - 100) / _model.Table.Size;
             Int32 currentColumn = ((sender as Button).TabIndex - 100) % _model.Table.Size;
 
-            Console.WriteLine(currentLine);
-            Console.WriteLine(currentColumn);
-            Console.WriteLine("Currently selected:");
-            Console.WriteLine(_model.CurrentlySelectedTileX);
-            Console.WriteLine(_model.CurrentlySelectedTileY);
-            Console.WriteLine((sender as Button).TabIndex);
+            Edge LastDrawnEdge = _model.SetLastDrawnEdge(currentLine, currentColumn);
 
-            foreach(Edge E in _model.EdgeList)
+            DrawLineOnTileClick(PlayerColor, currentLine, currentColumn);
+
+           if(LastDrawnEdge != null)
             {
-                bool FoundStartingNode = false;
-                Edge CurrentEdge = E;
-                while(FoundStartingNode == false){
-                    List<Edge> CurrentNeighbourList = _model.NeighboursForEdge(CurrentEdge);
-                    while (CurrentNeighbourList.Count() > 0)
+                Node start = new Node(currentLine, currentColumn);
+                List<Node> PathList = _model.EdgeList.DepthFirstTraversal(_model.EdgeList,start).ToList();
+
+                Console.WriteLine("---");
+                foreach (Node N in PathList)
+                {
+                    Console.Write("(" + N.X + "," + N.Y + ")");
+                }
+                Console.WriteLine("---");
+
+                // az összes eddigi élen végigmegyünk
+                foreach (Edge E in _model.EdgeList)
+                {
+                    bool FoundStartingNode = false;
+                    bool NoMoreEdges = false;
+
+                    Edge CurrentEdge = E;
+                    List<Edge> NeighboursOfLastDrawnEdge = new List<Edge>();
+
+                    // amíg nem találunk kört és nem fogy el az éllista
+                    while (FoundStartingNode == false && NoMoreEdges == false)
                     {
+
+                        // kigyűjtjük az E-hez csatlakozó éleket
+                        if (E.ConnectsTo(LastDrawnEdge))
+                        {
+                            NeighboursOfLastDrawnEdge.Add(E);
+                        }
+
+                        Console.WriteLine("neighbour count: " + NeighboursOfLastDrawnEdge.Count());
+                        // fogjuk az aktuális él szomszédjait
+                        for (int i = NeighboursOfLastDrawnEdge.Count - 1; i >= 0; i--)
+                        {
+                            // beállítjuk a szomszédot a vizsgálandó élnek
+                            CurrentEdge = NeighboursOfLastDrawnEdge[i];
+
+                            // keresünk egy kört a gráfban, ami az E él bármelyik bármelyikéből indul
+                            foreach (Node CurrentNode in (new HashSet<Node>(E.Nodes.Except(CurrentEdge.Nodes))))
+                            {
+                                foreach (Node CurrentNode2 in CurrentEdge.Nodes)
+                                {
+                                    if (CurrentNode == CurrentNode2)
+                                    {
+                                        FoundStartingNode = true;
+
+                                        MessageBox.Show("Found starting node.",
+                                            "Beadandó szar.",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Asterisk);
+                                    }
+                                }
+                            }
+                            NeighboursOfLastDrawnEdge.RemoveAt(i);
+                        }
+
+                        NoMoreEdges = true;
+                    }
+                    foreach (Node N in E.Nodes)
+                    {
+                        // ColorSquareTiles(_model.GetCurrentPlayer(), _buttonGrid[N.X, N.Y]);
 
                     }
                 }
-                foreach(Node N in E.Nodes)
-                {
-                    ColorSquareTiles(_model.GetCurrentPlayer(), _buttonGrid[N.X, N.Y]);
 
-                }
             }
-            
-            DrawLineOnTileClick(PlayerColor, currentLine, currentColumn);
 
         }
 
@@ -201,7 +246,6 @@ namespace ELTE.Forms.Sudoku.View
 
                 }
 
-                _model.EdgeList.Add(new Edge(new Node(currentLine, currentColumn), new Node(_model.CurrentlySelectedTileX, _model.CurrentlySelectedTileY)));
 
                 _model.ClearSelectedTiles();
                 //DrawSquareOnTileClick(PlayerColor);

@@ -21,7 +21,7 @@ namespace ELTE.Forms.Sudoku.Model
         public int CurrentlySelectedTileX { get; set; } = -1;
         public int CurrentlySelectedTileY { get; set; } = -1;
 
-        public List<Edge> EdgeList = new List<Edge>();
+        public GameGraph EdgeList = new GameGraph();
 
         #region Difficulty constants
 
@@ -107,10 +107,26 @@ namespace ELTE.Forms.Sudoku.Model
 
         public System.Collections.Generic.List<Edge> NeighboursForEdge(Edge E)
         {
-            return this.EdgeList.FindAll(delegate (Edge CurrentEdge) { return CurrentEdge.Nodes.Overlaps(E.Nodes); });
+            return this.EdgeList.FindAll(delegate (Edge CurrentEdge) {
+                return CurrentEdge.Nodes.Overlaps(E.Nodes) && CurrentEdge.Nodes != E.Nodes;
+            });
 
         }
 
+        public Edge SetLastDrawnEdge(int currentLine, int currentColumn)
+        {
+            Edge LastDrawnEdge = null;
+            if (CurrentlySelectedTileX != -1 && CurrentlySelectedTileY != -1)
+            {
+                LastDrawnEdge = new Edge(
+                    new Node(currentLine, currentColumn),
+                    new Node(CurrentlySelectedTileX, CurrentlySelectedTileY)
+                );
+                EdgeList.Add(LastDrawnEdge);
+            }
+
+            return LastDrawnEdge;
+        }
         /// <summary>
         /// Új játék kezdése.
         /// </summary>

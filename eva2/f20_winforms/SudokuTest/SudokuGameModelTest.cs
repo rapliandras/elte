@@ -114,6 +114,15 @@ namespace ELTE.Forms.Sudoku.Test
         }
 
         [TestMethod]
+
+        public void TestNeighbours()
+        {
+            Node Node1 = new Node(1, 2);
+            Node Node2 = new Node(2, 3);
+
+        }
+
+        [TestMethod]
         public void SudokuGameModelAdvanceTimeTest()
         {
             _model.NewGame();
