@@ -18,19 +18,11 @@ namespace BoxGame
 
 		bool m_FreeMoveOnScore = true;
 
-		public bool FreeMoveOnScore
-		{
-			get
-			{
-				return m_FreeMoveOnScore;
-			}
-			set
-			{
-				m_FreeMoveOnScore = value;
-			}
-		}
+        public bool GetFreeMoveOnScore() => m_FreeMoveOnScore;
 
-		public Game(IPlayer[] players, GameBoard board)
+        public void SetFreeMoveOnScore(bool value) => m_FreeMoveOnScore = value;
+
+        public Game(IPlayer[] players, GameBoard board)
 		{
 			m_GameBoard = board;
 			m_Players = new List<Player>(players.Length);
@@ -40,23 +32,11 @@ namespace BoxGame
 			}
 		}
 
-		public GameBoard Board
-		{
-			get
-			{
-				return m_GameBoard;
-			}
-		}
+        public GameBoard Board => m_GameBoard;
 
-		private Player CurrentPlayer
-		{
-			get
-			{
-				return m_Players[m_CurrentPlayer];
-			}
-		}
+        private Player CurrentPlayer => m_Players[m_CurrentPlayer];
 
-		private Player NextPlayer()
+        private Player NextPlayer()
 		{
 			m_CurrentPlayer++;
 			if (m_CurrentPlayer >= m_Players.Count)
@@ -67,25 +47,19 @@ namespace BoxGame
 			return CurrentPlayer;
 		}
 
-		public IPlayer[] Players
-		{
-			get 
-			{
-				return m_Players.ToArray();
-			}
-		}
+        public IPlayer[] GetPlayers()
+        {
+            return m_Players.ToArray();
+        }
 
-		IGameBoard IGame.Board
-		{
-			get
-			{
-				return m_GameBoard;
-			}
-		}
+        private IGameBoard GetBoard()
+        {
+            return m_GameBoard;
+        }
 
-		public void Start(IGraphicProvider gfx)
+        public void Start(IGraphicProvider gfx)
 		{
-			m_GameBoard.Render(gfx);
+			m_GameBoard.Render();
 
 			int playerMovesRemaining = m_MovesPerTurn;
 			while (m_GameBoard.MovesRemaining > 0)
@@ -104,7 +78,7 @@ namespace BoxGame
 				MoveScore s = m_GameBoard.MakeMove(move, CurrentPlayer);
 				playerMovesRemaining--;
 
-				if (FreeMoveOnScore)
+				if (GetFreeMoveOnScore())
 				{
 					if (s == MoveScore.One || s == MoveScore.Two)
 					{
@@ -112,7 +86,7 @@ namespace BoxGame
 					}
 				}
 
-				m_GameBoard.Render(gfx);
+				m_GameBoard.Render();
 
 				if (playerMovesRemaining == 0)
 				{
@@ -124,7 +98,7 @@ namespace BoxGame
 			StringBuilder sb = new StringBuilder();
 			foreach (Player p in m_Players)
 			{
-				sb.AppendFormat("{0}: {1}\n", p.DisplayName, p.Score);
+				sb.AppendFormat("{0}: {1}\n", p.GetDisplayName(), p.GetScore());
 			}
 
 			System.Windows.Forms.MessageBox.Show(sb.ToString());

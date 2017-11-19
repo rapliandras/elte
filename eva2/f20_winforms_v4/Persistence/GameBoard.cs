@@ -7,26 +7,15 @@ using BoxGame.Model;
 namespace BoxGame.Persistence
 {
 
-
-	public enum MoveScore
-	{
-		NotAllowed = -1,
-		Zero = 0,
-		One = 1,
-		Two = 2
-	}
-
-	public enum BoxDirection
-	{
-		Up,
-		Down,
-		Left,
-		Right
-	}
-
-	class GameBoard : IGameBoard, ICornerMapper
+    class GameBoard : IGameBoard, ICornerMapper
 	{
         public event EventHandler<GameEventArgs> BoxRenderable;
+        public event EventHandler<GameEventArgs> MoveRenderable;
+        public event EventHandler<GameEventArgs> DotRenderable;
+        public event EventHandler<GameEventArgs> BackgroundRenderable;
+        public event EventHandler<GameEventArgs> ReadyToInvalidate;
+
+
 
         List<List<Corner>> m_CornerRows;
 		List<IMove> m_Moves;
@@ -34,10 +23,10 @@ namespace BoxGame.Persistence
 		List<Box> m_Boxes;
 		IGraphicProvider m_Graphics;
 
-		readonly int m_Rows;
-		readonly int m_Columns;
-		readonly int m_PointsPerInch = 2;
-		readonly int m_PossibleLines;
+		public int m_Rows;
+		public int m_Columns;
+		public int m_PointsPerInch = 2;
+		public int m_PossibleLines;
 
 		public GameBoard(int rows, int columns)
 		{
@@ -62,23 +51,11 @@ namespace BoxGame.Persistence
 			m_Boxes = new List<Box>( (m_Rows-1) * (m_Columns-1) );
 		}
 
-		public int MovesRemaining
-		{
-			get
-			{
-				return m_PossibleLines - m_Moves.Count;
-			}
-		}
+        public int MovesRemaining => m_PossibleLines - m_Moves.Count;
 
-		public List<Move> AvailableMoves
-		{
-			get
-			{
-				return m_RemainingMoves;
-			}
-		}
+        public List<Move> AvailableMoves => m_RemainingMoves;
 
-		public MoveScore MakeMove(IMove move, Player p)
+        public MoveScore MakeMove(IMove move, Player p)
 		{
 			List<Box> results  = SpeculateMove(move, p);
 			bool foundSlot = false;
@@ -141,52 +118,30 @@ namespace BoxGame.Persistence
 			}
 		}
 
-		public IGraphicProvider GraphicsProvider
-		{
-			get
-			{
-				return m_Graphics;
-			}
-			set
-			{
-				m_Graphics = value;
-			}
-		}
+        public IGraphicProvider GetGraphicsProvider() => m_Graphics;
 
-		int IGameBoard.Rows
-		{
-			get
-			{
-				return m_Rows;
-			}
-		}
+        public void SetGraphicsProvider(IGraphicProvider value) => m_Graphics = value;
 
-		int IGameBoard.Columns
-		{
-			get
-			{
-				return m_Columns;
-			}
-		}
+        private int GetRows()
+        {
+            return m_Rows;
+        }
 
-		ICorner[] IGameBoard.this[int index]
-		{
-			get
-			{
-				return m_CornerRows[index].ToArray();
-			}
-		}
+        private int GetColumns()
+        {
+            return m_Columns;
+        }
+
+        ICorner[] IGameBoard.this[int index] => m_CornerRows[index].ToArray();
 
 
 
-		bool bgRendered = false;
-		public void Render(IGraphicProvider gfx)
+        public bool bgRendered = false;
+		public void Render()
 		{
 			if (bgRendered == false)
 			{
-				Bitmap b = GenerateEmptyBackground(Color.White);
-				gfx.DrawImage(b, 0, 0);
-				bgRendered = true;
+                OnBackgroundRenderable();
 			}
 
 			for(int i = 0; i < m_Rows; i++)
@@ -194,34 +149,56 @@ namespace BoxGame.Persistence
 				List<Corner> row = m_CornerRows[i];
 				foreach (Corner c in row)
 				{
-					c.Render(gfx);
+                    OnDotRenderable(c);
 				}
 			}
 
-			foreach (IMove m in m_Moves)
+			foreach (Move m in m_Moves)
 			{
-				m.Render(gfx);
+                OnMoveRenderable(m);
 			}
 
 			foreach (Box b in m_Boxes)
 			{
-                //b.Render(gfx);
                 OnBoxRenderable(b);
 			}
 
-			gfx.Invalidate();
+
+            OnReadyToInvalidate();
+
+			//gfx.Invalidate();
 		}
 
 	
+        private void OnMoveRenderable(Move m)
+        {
+            MoveRenderable?.Invoke(this, new GameEventArgs(m));
+        }
+
         private void OnBoxRenderable(Box b)
         {
             BoxRenderable?.Invoke(this, new GameEventArgs(b));
         }
 
+        private void OnDotRenderable(Corner c)
+        {
+            DotRenderable?.Invoke(this, new GameEventArgs(c));
+        }
+
+        private void OnBackgroundRenderable()
+        {
+            BackgroundRenderable?.Invoke(this, new GameEventArgs());
+        }
+
+        private void OnReadyToInvalidate()
+        {
+            ReadyToInvalidate?.Invoke(this, new GameEventArgs());
+        }
+
 		public Point GetGraphicsPoint(ICorner corner)
 		{
-			int SpacingX = m_Graphics.DpiX / m_PointsPerInch;
-			int SpacingY = m_Graphics.DpiY / m_PointsPerInch;
+			int SpacingX = m_Graphics.GetDpiX() / m_PointsPerInch;
+			int SpacingY = m_Graphics.GetDpiY() / m_PointsPerInch;
 
 			for (int row = 0; row < m_Rows; row++)
 			{
@@ -278,25 +255,9 @@ namespace BoxGame.Persistence
 		}
 
 
-		private static void SetBGColor(Bitmap b, Color c)
-		{
-			for (int x = 0; x < b.Width; x++)
-			{
-				for (int y = 0; y < b.Height; y++)
-				{
-					b.SetPixel(x, y, c);
-				}
-			}
-		}
 
-		private Bitmap GenerateEmptyBackground(Color bgColor)
-		{
-			Size s = GetMinimumGraphicsSize(m_Graphics.DpiX, m_Graphics.DpiY);
-			Bitmap b = new Bitmap(s.Width, s.Height, m_Graphics.PixelFormat);
-			SetBGColor(b, bgColor);
 
-			return b;
-		}
+
 
 
 		private bool CornerPointOnBoard(Point p)
@@ -305,19 +266,13 @@ namespace BoxGame.Persistence
 					p.Y >= 0 && p.Y < m_Rows);
 		}
 
-		public List<IMove> Moves
-		{
-			get
-			{
-				return m_Moves;
-			}
-		}
+        public List<IMove> Moves => m_Moves;
 
-		public bool AreBoxableCorners(Corner ul, Corner ur, Corner ll, Corner lr)
+        public bool AreBoxableCorners(Corner ul, Corner ur, Corner ll, Corner lr)
 		{
 			bool areBoxable = false;
-			if (CornerPointOnBoard(ul.Location) && CornerPointOnBoard(ur.Location) &&
-				CornerPointOnBoard(ll.Location) && CornerPointOnBoard(lr.Location))
+			if (CornerPointOnBoard(ul.GetLocation()) && CornerPointOnBoard(ur.GetLocation()) &&
+				CornerPointOnBoard(ll.GetLocation()) && CornerPointOnBoard(lr.GetLocation()))
 			{
 				if (ul.IsAdjacentTo(ll) && ul.IsAdjacentTo(ur))
 				{
@@ -345,8 +300,8 @@ namespace BoxGame.Persistence
 				}
 				else
 				{
-					fillsGap = (move.Line.Start.Location == ul.Location &&
-								move.Line.End.Location == ur.Location);
+					fillsGap = (move.GetLine().GetStart().GetLocation() == ul.GetLocation() &&
+								move.GetLine().GetEnd().GetLocation() == ur.GetLocation());
 				}
 
 				if (!IsAvailableMove(ur, lr))
@@ -355,8 +310,8 @@ namespace BoxGame.Persistence
 				}
 				else
 				{
-					fillsGap = (move.Line.Start.Location == ur.Location &&
-								move.Line.End.Location == lr.Location);
+					fillsGap = (move.GetLine().GetStart().GetLocation() == ur.GetLocation() &&
+								move.GetLine().GetEnd().GetLocation() == lr.GetLocation());
 				}
 
 				if (!IsAvailableMove(ll, lr))
@@ -365,8 +320,8 @@ namespace BoxGame.Persistence
 				}
 				else
 				{
-					fillsGap = (move.Line.Start.Location == ll.Location &&
-								move.Line.End.Location == lr.Location);
+					fillsGap = (move.GetLine().GetStart().GetLocation() == ll.GetLocation() &&
+								move.GetLine().GetEnd().GetLocation() == lr.GetLocation());
 				}
 
 				if (!IsAvailableMove(ul, ll))
@@ -375,8 +330,8 @@ namespace BoxGame.Persistence
 				}
 				else
 				{
-					fillsGap = (move.Line.Start.Location == ul.Location &&
-								move.Line.End.Location == ll.Location);
+					fillsGap = (move.GetLine().GetStart().GetLocation() == ul.GetLocation() &&
+								move.GetLine().GetEnd().GetLocation() == ll.GetLocation());
 				}
 
 				makesBox = filledLines == 3 && fillsGap;
@@ -389,7 +344,7 @@ namespace BoxGame.Persistence
 		{
 			Corner result = null;
 
-			Point newP = orig.Location;
+			Point newP = orig.GetLocation();
 			switch (direction)
 			{
 				case BoxDirection.Up:
@@ -423,21 +378,21 @@ namespace BoxGame.Persistence
 			{
 				case BoxDirection.Up:
 					{
-						if(!(move.Line as Line).Vertical)
+						if(!(move.GetLine() as Line).Vertical)
 						{
-							ll = move.Line.Start as Corner;
+							ll = move.GetLine().GetStart() as Corner;
 							ul = GetCornerFromDirection(ll, BoxDirection.Up);
-							lr = move.Line.End as Corner;
+							lr = move.GetLine().GetEnd() as Corner;
 							ur = GetCornerFromDirection(lr, BoxDirection.Up);
 						}
 					}
 					break;
 				case BoxDirection.Down:
 					{
-						if (!(move.Line as Line).Vertical)
+						if (!(move.GetLine() as Line).Vertical)
 						{
-							ul = move.Line.Start as Corner;
-							ur = move.Line.End as Corner;
+							ul = move.GetLine().GetStart() as Corner;
+							ur = move.GetLine().GetEnd() as Corner;
 							ll = GetCornerFromDirection(ul, BoxDirection.Down);
 							lr = GetCornerFromDirection(ur, BoxDirection.Down);
 						}
@@ -445,10 +400,10 @@ namespace BoxGame.Persistence
 					break;
 				case BoxDirection.Left:
 					{
-						if ((move.Line as Line).Vertical)
+						if ((move.GetLine() as Line).Vertical)
 						{
-							ur = move.Line.Start as Corner;
-							lr = move.Line.End as Corner;
+							ur = move.GetLine().GetStart() as Corner;
+							lr = move.GetLine().GetEnd() as Corner;
 							ul = GetCornerFromDirection(ur, BoxDirection.Left);
 							ll = GetCornerFromDirection(lr, BoxDirection.Left);
 						}
@@ -456,10 +411,10 @@ namespace BoxGame.Persistence
 					break;
 				case BoxDirection.Right:
 					{
-						if ((move.Line as Line).Vertical)
+						if ((move.GetLine() as Line).Vertical)
 						{
-							ul = move.Line.Start as Corner;
-							ll = move.Line.End as Corner;
+							ul = move.GetLine().GetStart() as Corner;
+							ll = move.GetLine().GetEnd() as Corner;
 							ur = GetCornerFromDirection(ul, BoxDirection.Right);
 							lr = GetCornerFromDirection(ll, BoxDirection.Right);
 						}
@@ -521,22 +476,19 @@ namespace BoxGame.Persistence
 			return results;
 		}
 
-		public bool IsAvailableMove(Corner start, Corner end)
-		{
-			return IsAvailableMove(new Move(new Line(start, end)));
-		}
+        public bool IsAvailableMove(Corner start, Corner end) => IsAvailableMove(new Move(new Line(start, end)));
 
-		public bool IsAvailableMove(IMove move)
+        public bool IsAvailableMove(IMove move)
 		{
-			Point start = move.Line.Start.Location;
-			Point end = move.Line.End.Location;
+			Point start = move.GetLine().GetStart().GetLocation();
+			Point end = move.GetLine().GetEnd().GetLocation();
 
 			if (CornerPointOnBoard(start) && CornerPointOnBoard(end))
 			{
 				foreach (Move m in m_Moves)
 				{
-					if (m.Line.Start == move.Line.Start &&
-						m.Line.End == move.Line.End)
+					if (m.GetLine().GetStart() == move.GetLine().GetStart() &&
+						m.GetLine().GetEnd() == move.GetLine().GetEnd())
 					{
 						return false;
 					}

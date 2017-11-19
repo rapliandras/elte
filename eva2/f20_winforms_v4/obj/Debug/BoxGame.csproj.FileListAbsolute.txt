@@ -1,0 +1,11 @@
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms_v4\bin\Debug\BoxGame.exe.config
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms_v4\bin\Debug\BoxGame.exe
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms_v4\bin\Debug\BoxGame.pdb
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms_v4\obj\Debug\BoxGame.csprojResolveAssemblyReference.cache
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms_v4\obj\Debug\BoxGame.GamePanel.resources
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms_v4\obj\Debug\BoxGame.View.GameSettings.resources
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms_v4\obj\Debug\BoxGame.Properties.Resources.resources
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms_v4\obj\Debug\BoxGame.csproj.GenerateResource.Cache
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms_v4\obj\Debug\BoxGame.csproj.CoreCompileInputs.cache
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms_v4\obj\Debug\BoxGame.exe
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\f20_winforms_v4\obj\Debug\BoxGame.pdb
