@@ -47,15 +47,9 @@ namespace BoxGame
 			return CurrentPlayer;
 		}
 
-        public IPlayer[] GetPlayers()
-        {
-            return m_Players.ToArray();
-        }
+        public IPlayer[] GetPlayers() => m_Players.ToArray();
 
-        public IGameBoard GetBoard()
-        {
-            return m_GameBoard;
-        }
+        public IGameBoard GetBoard() => m_GameBoard;
 
         public void Start(IGraphicProvider gfx)
 		{

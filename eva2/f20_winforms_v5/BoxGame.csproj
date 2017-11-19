@@ -86,6 +86,9 @@
   <ItemGroup>
     <Compile Include="Model\GameEventArgs.cs" />
     <Compile Include="Persistence\BoxDirection.cs" />
+    <Compile Include="Persistence\BoxGameDataException.cs" />
+    <Compile Include="Persistence\BoxGameFileDataAccess.cs" />
+    <Compile Include="Persistence\IBoxGameDataAccess.cs" />
     <Compile Include="Persistence\MoveScore.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -131,7 +134,7 @@
     <Compile Include="View\GraphicsProvider.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="View\InkInputPlayer.cs">
+    <Compile Include="Model\InkInputPlayer.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Interfaces.cs">

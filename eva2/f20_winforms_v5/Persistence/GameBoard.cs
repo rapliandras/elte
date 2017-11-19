@@ -7,7 +7,7 @@ using BoxGame.Model;
 namespace BoxGame.Persistence
 {
 
-    class GameBoard : IGameBoard, ICornerMapper
+    public class GameBoard : IGameBoard, ICornerMapper
 	{
         public event EventHandler<GameEventArgs> BoxRenderable;
         public event EventHandler<GameEventArgs> MoveRenderable;
@@ -359,7 +359,7 @@ namespace BoxGame.Persistence
 			return result;
 		}
 
-		Box CreateBox(IMove move, BoxDirection direction, Player player)
+		public Box CreateBox(IMove move, BoxDirection direction, Player player)
 		{
 			bool wouldBox = false;
 			Corner ul = null, ur = null, ll = null, lr = null;

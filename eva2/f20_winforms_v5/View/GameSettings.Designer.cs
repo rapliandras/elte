@@ -63,10 +63,8 @@ namespace BoxGame.View
             // 
             this.cbPlayer1Type.FormattingEnabled = true;
             this.cbPlayer1Type.Items.AddRange(new object[] {
-            "Human Player",
-            "Computer (Good)",
-            "Computer (Random)",
-            "Computer (Intentionally Bad)"});
+            "Human Player"});
+            this.cbPlayer1Type.Visible = false;
             this.cbPlayer1Type.Location = new System.Drawing.Point(97, 18);
             this.cbPlayer1Type.Name = "cbPlayer1Type";
             this.cbPlayer1Type.Size = new System.Drawing.Size(121, 21);
@@ -76,10 +74,9 @@ namespace BoxGame.View
             // 
             this.cbPlayer2Type.FormattingEnabled = true;
             this.cbPlayer2Type.Items.AddRange(new object[] {
-            "Human Player",
-            "Computer (Good)",
-            "Computer (Random)",
-            "Computer (Intentionally Bad)"});
+            "Human Player"});
+            this.cbPlayer2Type.Visible = false;
+
             this.cbPlayer2Type.Location = new System.Drawing.Point(97, 46);
             this.cbPlayer2Type.Name = "cbPlayer2Type";
             this.cbPlayer2Type.Size = new System.Drawing.Size(121, 21);
@@ -87,7 +84,7 @@ namespace BoxGame.View
             // 
             // txtPlayer1Name
             // 
-            this.txtPlayer1Name.Location = new System.Drawing.Point(242, 18);
+            this.txtPlayer1Name.Location = new System.Drawing.Point(97, 18);
             this.txtPlayer1Name.Name = "txtPlayer1Name";
             this.txtPlayer1Name.Size = new System.Drawing.Size(100, 20);
             this.txtPlayer1Name.TabIndex = 4;
@@ -95,7 +92,7 @@ namespace BoxGame.View
             // 
             // txtPlayer2Name
             // 
-            this.txtPlayer2Name.Location = new System.Drawing.Point(242, 45);
+            this.txtPlayer2Name.Location = new System.Drawing.Point(97, 46);
             this.txtPlayer2Name.Name = "txtPlayer2Name";
             this.txtPlayer2Name.Size = new System.Drawing.Size(100, 20);
             this.txtPlayer2Name.TabIndex = 5;
@@ -105,34 +102,9 @@ namespace BoxGame.View
             // 
             this.cbBoardWidth.FormattingEnabled = true;
             this.cbBoardWidth.Items.AddRange(new object[] {
-            "2",
             "3",
-            "4",
             "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20",
-            "22",
-            "23",
-            "24",
-            "25",
-            "26",
-            "27",
-            "28",
-            "29",
-            "30"});
+            "9"});
             this.cbBoardWidth.Location = new System.Drawing.Point(96, 75);
             this.cbBoardWidth.Name = "cbBoardWidth";
             this.cbBoardWidth.Size = new System.Drawing.Size(122, 21);
@@ -142,34 +114,9 @@ namespace BoxGame.View
             // 
             this.cbBoardHeight.FormattingEnabled = true;
             this.cbBoardHeight.Items.AddRange(new object[] {
-            "2",
             "3",
-            "4",
             "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20",
-            "22",
-            "23",
-            "24",
-            "25",
-            "26",
-            "27",
-            "28",
-            "29",
-            "30"});
+            "9"});
             this.cbBoardHeight.Location = new System.Drawing.Point(96, 103);
             this.cbBoardHeight.Name = "cbBoardHeight";
             this.cbBoardHeight.Size = new System.Drawing.Size(122, 21);
@@ -221,6 +168,7 @@ namespace BoxGame.View
             this.cbFreeMove.Size = new System.Drawing.Size(200, 24);
             this.cbFreeMove.TabIndex = 12;
             this.cbFreeMove.Text = "Free Move When Box is Made";
+            this.cbFreeMove.Visible = false;
             // 
             // GameSettings
             // 

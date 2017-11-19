@@ -6,7 +6,7 @@ namespace BoxGame
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
 		/// </summary>
-		private void InitializeComponent()
+		public void InitializeComponent()
 		{
             this.inkPanel = new Microsoft.Ink.InkPicture();
             ((System.ComponentModel.ISupportInitialize)(this.inkPanel)).BeginInit();
@@ -54,7 +54,7 @@ namespace BoxGame
 			base.Dispose(disposing);
 		}
 
-		internal Microsoft.Ink.InkPicture inkPanel;
+		public Microsoft.Ink.InkPicture inkPanel;
     }
 }
 

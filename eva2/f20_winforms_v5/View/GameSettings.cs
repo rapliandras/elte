@@ -29,30 +29,12 @@ namespace BoxGame.View
 				case 0: // human
 					players[0] = new InkInputPlayer(txtPlayer1Name.Text, "P1", Color.Tomato, f.inkPanel, gb);
 					break;
-				case 1: // Computer (Good)
-					players[0] = new AI_PickHighPoint(txtPlayer1Name.Text, "P1", Color.Tomato);
-					break;
-				case 2: // Computer (Random)
-					players[0] = new AI_PickRandomPoint(txtPlayer1Name.Text, "P1", Color.Tomato);
-					break;
-				case 3: // Computer (Intentionally Bad)
-					players[0] = new AI_PickWorstPoint(txtPlayer1Name.Text, "P1", Color.Tomato);
-					break;
 			}
 
 			switch (this.cbPlayer2Type.SelectedIndex)
 			{
 				case 0: // human
 					players[1] = new InkInputPlayer(txtPlayer2Name.Text, "P2", Color.Navy, f.inkPanel, gb);
-					break;
-				case 1: // Computer (Good)
-					players[1] = new AI_PickHighPoint(txtPlayer2Name.Text, "P2", Color.Navy);
-					break;
-				case 2: // Computer (Random)
-					players[1] = new AI_PickRandomPoint(txtPlayer2Name.Text, "P2", Color.Navy);
-					break;
-				case 3: // Computer (Intentionally Bad)
-					players[1] = new AI_PickWorstPoint(txtPlayer2Name.Text, "P2", Color.Navy);
 					break;
 			}
 
@@ -71,8 +53,8 @@ namespace BoxGame.View
 		{
 			cbPlayer1Type.SelectedIndex = 0;
 			cbPlayer2Type.SelectedIndex = 0;
-			cbBoardHeight.SelectedIndex = 6;
-			cbBoardWidth.SelectedIndex = 6;
+			cbBoardHeight.SelectedIndex = 1;
+			cbBoardWidth.SelectedIndex = 1;
 		}
 	}
 }

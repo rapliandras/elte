@@ -1,6 +1,6 @@
 ﻿namespace BoxGame
 {
-    class Box : IBox
+    public class Box : IBox
 	{
 		Line m_Top;
 		Line m_Bottom;

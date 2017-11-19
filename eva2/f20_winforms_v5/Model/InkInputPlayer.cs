@@ -7,7 +7,7 @@ using BoxGame.Persistence;
 
 namespace BoxGame
 {
-	class InkInputPlayer : Player, IDisposable
+	public class InkInputPlayer : Player, IDisposable
 	{
 		InkPicture m_InkPicture;
 		EventWaitHandle m_Waiter;

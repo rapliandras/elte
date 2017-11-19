@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace BoxGame
 {
-    class Corner : ICorner
+    public class Corner : ICorner
 	{
 		Point m_Location;
 		ICornerMapper m_Mapper;

@@ -1,0 +1,16 @@
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\BoxGameTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\BoxGameTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\BoxGameTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\BoxGameTest\bin\Debug\BoxGameTest.dll
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\BoxGameTest\bin\Debug\BoxGameTest.pdb
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\BoxGameTest\bin\Debug\BoxGame.exe
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\BoxGameTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\BoxGameTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\BoxGameTest\bin\Debug\BoxGame.pdb
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\BoxGameTest\bin\Debug\BoxGame.exe.config
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\BoxGameTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\BoxGameTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\BoxGameTest\obj\Debug\BoxGameTest.csprojResolveAssemblyReference.cache
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\BoxGameTest\obj\Debug\BoxGameTest.csproj.CoreCompileInputs.cache
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\BoxGameTest\obj\Debug\BoxGameTest.dll
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\BoxGameTest\obj\Debug\BoxGameTest.pdb

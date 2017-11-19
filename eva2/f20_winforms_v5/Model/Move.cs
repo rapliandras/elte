@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace BoxGame
 {
-	class Move : IMove
+	public class Move : IMove
 	{
 		Line m_Line;
 		Player m_Player;

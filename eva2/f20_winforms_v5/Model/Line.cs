@@ -3,7 +3,7 @@ using System;
 
 namespace BoxGame
 {
-    class Line : ILine
+    public class Line : ILine
 	{
 		Corner m_Start;
 		Corner m_End;

@@ -1,19 +1,16 @@
 using System;
 using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms;
-using System.Data;
 using System.Threading;
 using BoxGame.Persistence;
 using BoxGame.Model;
 
 namespace BoxGame
 {
-	/// <summary>
-	/// Summary description for form.
-	/// </summary>
-	partial class GamePanel : System.Windows.Forms.Form
+    /// <summary>
+    /// Summary description for form.
+    /// </summary>
+    public partial class GamePanel : System.Windows.Forms.Form
 	{
 		Game m_BoxGame;
 		Thread m_GameThread;
@@ -24,7 +21,7 @@ namespace BoxGame
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
-		internal GamePanel()
+		public GamePanel()
 		{
 			InitializeComponent();
 
