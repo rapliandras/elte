@@ -11,8 +11,8 @@ namespace BoxGameTest
     [TestClass]
     public class UnitTest1
     {
-        private BoxGame.Persistence.GameBoard _gameBoard;
-        private BoxGame.GamePanel _gamePanel;
+        private GameBoard _gameBoard;
+        private GamePanel _gamePanel;
 
         [TestInitialize]
         public void Initialize()
@@ -43,7 +43,7 @@ namespace BoxGameTest
 
             Player P = new InkInputPlayer("andrew","P1", System.Drawing.Color.Blue, _gamePanel.inkPanel, _gameBoard);
 
-            BoxGame.Move M = new BoxGame.Move(L, P);
+            Move M = new Move(L, P);
 
             _gameBoard.MakeMove(M, P);
 
@@ -91,10 +91,10 @@ namespace BoxGameTest
             Player P1 = new InkInputPlayer("andrew", "P1", System.Drawing.Color.Blue, _gamePanel.inkPanel, _gameBoard);
             Player P2 = new InkInputPlayer("johndoe", "P2", System.Drawing.Color.Red, _gamePanel.inkPanel, _gameBoard);
 
-            BoxGame.Move M1 = new BoxGame.Move(L1, P1);
-            BoxGame.Move M2 = new BoxGame.Move(L2, P2);
-            BoxGame.Move M3 = new BoxGame.Move(L3, P1);
-            BoxGame.Move M4 = new BoxGame.Move(L4, P2);
+            Move M1 = new Move(L1, P1);
+            Move M2 = new Move(L2, P2);
+            Move M3 = new Move(L3, P1);
+            Move M4 = new Move(L4, P2);
 
             _gameBoard.MakeMove(M1, P1);
             _gameBoard.MakeMove(M2, P2);
@@ -102,7 +102,7 @@ namespace BoxGameTest
             _gameBoard.MakeMove(M4, P2);
 
             //Assert that the fourth move has created a box.
-            Assert.IsNotNull(_gameBoard.SpeculateMove(M4, P2));
+            Assert.IsNotNull(_gameBoard.BoxesCreatedByMove(M4, P2));
            
         }
 

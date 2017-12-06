@@ -1,0 +1,11 @@
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\beadando_LBZICA\obj\Debug\BoxGame.csprojResolveAssemblyReference.cache
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\beadando_LBZICA\obj\Debug\BoxGame.View.GamePanel.resources
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\beadando_LBZICA\obj\Debug\BoxGame.View.GameSettings.resources
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\beadando_LBZICA\obj\Debug\BoxGame.Properties.Resources.resources
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\beadando_LBZICA\obj\Debug\BoxGame.csproj.GenerateResource.Cache
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\beadando_LBZICA\obj\Debug\BoxGame.csproj.CoreCompileInputs.cache
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\beadando_LBZICA\bin\Debug\BoxGame.exe.config
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\beadando_LBZICA\bin\Debug\BoxGame.exe
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\beadando_LBZICA\bin\Debug\BoxGame.pdb
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\beadando_LBZICA\obj\Debug\BoxGame.exe
+C:\Users\AndrasRapli\Documents\repos\elte\eva2\beadando_LBZICA\obj\Debug\BoxGame.pdb
